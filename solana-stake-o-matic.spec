@@ -1,8 +1,8 @@
 %global src_name stake-o-matic
 
 Name:       solana-%{src_name}
-# git f65c3ce97e90db44f747d6533bea78b06dfa66fe
-Version:    11
+# git 94aa5c3d10a1037acabafe55ce2796cd0f766dd2
+Version:    12
 Release:    1%{?dist}
 Summary:    Utility and daemon for Solana Foundation Delegation Program
 
@@ -79,5 +79,8 @@ mv target/release/* \
 
 
 %changelog
+* Sun Sep 19 2021 Ivan Mironov <mironov.ivan@gmail.com> - 12-1
+- Update to v12
+
 * Sat Jun 5 2021 Ivan Mironov <mironov.ivan@gmail.com> - 11-1
 - Initial packaging
