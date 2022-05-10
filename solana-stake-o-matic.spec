@@ -3,7 +3,7 @@
 Name:       solana-%{src_name}
 # git 94aa5c3d10a1037acabafe55ce2796cd0f766dd2
 Version:    12
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Utility and daemon for Solana Foundation Delegation Program
 
 License:    Apache-2.0
@@ -18,7 +18,7 @@ Source2:    config.toml
 ExclusiveArch:  %{rust_arches}
 
 BuildRequires:  rust-packaging
-BuildRequires:  openssl-devel
+BuildRequires:  openssl1.1-devel
 
 # libudev-devel
 BuildRequires:  systemd-devel
@@ -79,6 +79,9 @@ mv target/release/* \
 
 
 %changelog
+* Tue May 10 2022 Ivan Mironov <mironov.ivan@gmail.com> - 12-2
+- Fix build on Fedora 36
+
 * Sun Sep 19 2021 Ivan Mironov <mironov.ivan@gmail.com> - 12-1
 - Update to v12
 
