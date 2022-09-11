@@ -1,24 +1,30 @@
+%global commit          534f1594acf70a366ef889cb9755055af7283b6e
+%global checkout_date   20220911
+%global short_commit    %(c=%{commit}; echo ${c:0:7})
+%global snapshot        %{checkout_date}git%{short_commit}
+
 %global src_name stake-o-matic
 
 Name:       solana-%{src_name}
+Epoch:      1
 # git 94aa5c3d10a1037acabafe55ce2796cd0f766dd2
-Version:    12
-Release:    2%{?dist}
+Version:    0
+Release:    1.%{snapshot}%{?dist}
 Summary:    Utility and daemon for Solana Foundation Delegation Program
 
 License:    Apache-2.0
 URL:        https://github.com/solana-labs/stake-o-matic/
-Source0:    https://github.com/solana-labs/stake-o-matic/archive/v%{version}/%{src_name}-%{version}.tar.gz
+Source0:    https://github.com/solana-labs/stake-o-matic/archive/%{commit}/%{src_name}-%{snapshot}.tar.gz
 
 # $ cargo vendor
 # Contains solana-$VERSION/vendor/*.
-Source1:    %{src_name}-%{version}.cargo-vendor.tar.xz
+Source1:    %{src_name}-%{snapshot}.cargo-vendor.tar.xz
 Source2:    config.toml
 
 ExclusiveArch:  %{rust_arches}
 
 BuildRequires:  rust-packaging
-BuildRequires:  openssl1.1-devel
+BuildRequires:  openssl-devel
 
 # libudev-devel
 BuildRequires:  systemd-devel
@@ -45,8 +51,7 @@ Solana Stake-o-Matic daemon.
 
 
 %prep
-%autosetup -p1 -b0 -n %{src_name}-%{version}
-%autosetup -p1 -b1 -n %{src_name}-%{version}
+%autosetup -b1 -n %{src_name}-%{commit}
 
 mkdir .cargo
 cp %{SOURCE2} .cargo/
@@ -79,6 +84,9 @@ mv target/release/* \
 
 
 %changelog
+* Sun Sep 11 2022 Ivan Mironov <mironov.ivan@gmail.com> - 1:0-1.20220911git534f159
+- Build from git snapshot
+
 * Tue May 10 2022 Ivan Mironov <mironov.ivan@gmail.com> - 12-2
 - Fix build on Fedora 36
 
