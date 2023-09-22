@@ -1,5 +1,5 @@
-%global commit          534f1594acf70a366ef889cb9755055af7283b6e
-%global checkout_date   20220911
+%global commit          c786ac0d7010598f596d948e2e844448b8185b73
+%global checkout_date   20230922
 %global short_commit    %(c=%{commit}; echo ${c:0:7})
 %global snapshot        %{checkout_date}git%{short_commit}
 
@@ -56,6 +56,10 @@ Solana Stake-o-Matic daemon.
 mkdir .cargo
 cp %{SOURCE2} .cargo/
 
+# Fix Fedora's shebang mangling errors:
+#     *** ERROR: ./usr/src/debug/solana-testnet-1.10.0-1.fc35.x86_64/vendor/ascii/src/ascii_char.rs has shebang which doesn't start with '/' ([cfg_attr(rustfmt, rustfmt_skip)])
+find . -type f -name "*.rs" -exec chmod 0644 "{}" ";"
+
 
 %build
 %{__cargo} build %{?_smp_mflags} -Z avoid-dev-deps --frozen --release
@@ -84,6 +88,9 @@ mv target/release/* \
 
 
 %changelog
+* Fri Sep 22 2023 Ivan Mironov <mironov.ivan@gmail.com> - 1:0-1.20230922gitc786ac0
+- Bump version to current git
+
 * Sun Sep 11 2022 Ivan Mironov <mironov.ivan@gmail.com> - 1:0-1.20220911git534f159
 - Build from git snapshot
 
